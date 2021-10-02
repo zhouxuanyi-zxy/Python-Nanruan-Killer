@@ -3,14 +3,14 @@
 # Author: zhouxuanyi
 # License: MIT
 # 2021/9/27 22.47
+# 2021/10/2 14:46
 
 import os
 import sys
 
 def pssuspend():
     print("使用pssuspend挂起进程")
-    print(pssuspend)
-    path = sys.path[1]
+    path = sys.path[0]
     print(path)
     pssuspendfile = path + "\pssuspend.exe"
     pssuspendfile = pssuspendfile + " StudentMain.exe"
@@ -24,11 +24,19 @@ def taskkill():
 
 def pskill():
     print("使用pskill结束进程")
-    pskill = sys.path[1]
+    pskill = sys.path[0]
     pskill = pskill + "\pskill.exe"
     pskill = pskill + " -t StudentMain.exe"
+    print(pskill)
     os.system("chcp 65001")
     os.system(pskill)
+
+print("------by zhouxuanyi_zxy ------")
+pssuspend()
+taskkill()
+pskill()
+print("Done!")
+
 
 
 
