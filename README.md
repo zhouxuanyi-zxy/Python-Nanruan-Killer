@@ -4,7 +4,7 @@
 ## 使用说明
 请下载**pssuspend.exe**和**pskill**文件及程序主文件  
 之后在信息课拼手速插U盘点开程序即可破解  
-**1.01版本不能保证进程可以被结束，因为pskill以前我没有测试过。但可以保证进程可以被挂起**  
+**1.01、1.02（因为这只是在发行版里取消了exe文件的下载）版本不能保证进程可以被结束，因为pskill以前我没有测试过。但可以保证进程可以被挂起**  
 如果无法访问[GitHub](https://github.com/zhouxuanyi-zxy/Python-Nanruan-Killer)，也可以访问[Gitee的地址](https://gitee.com/zhouxuanyi/Python-Nanruan-Killer)，就是更新有点慢
 
 ### 最后的话
