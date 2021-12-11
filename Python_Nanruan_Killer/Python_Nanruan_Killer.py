@@ -1,9 +1,10 @@
 # Nanruan_Killer Python Edition
-# Version 1.01
+# Version 1.03
 # Author: zhouxuanyi
 # License: MIT
 # 2021/9/27 22.47
 # 2021/10/2 14:46
+# 2021/12/11 11:34
 
 import os
 import sys
@@ -11,7 +12,6 @@ import sys
 def pssuspend():
     print("使用pssuspend挂起进程")
     path = sys.path[0]
-    print(path)
     pssuspendfile = path + "\pssuspend.exe"
     pssuspendfile = pssuspendfile + " StudentMain.exe"
     print(pssuspendfile)
@@ -31,12 +31,7 @@ def pskill():
     os.system("chcp 65001")
     os.system(pskill)
 
-print("------by zhouxuanyi_zxy ------")
+print("------ by zhouxuanyi_zxy ------")
 pssuspend()
 taskkill()
 pskill()
-print("Done!")
-
-
-
-
