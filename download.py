@@ -15,7 +15,7 @@ with open("pskill.exe", "wb") as code:
   code.write(r.content)
 
 print ("Downloading Pssuspend")
-# pssuspendurl = 'https://github.com/zhouxuanyi-zxy/Python-Nanruan-Killer/raw/master/pssuspend.exehttps://github.com/zhouxuanyi-zxy/Python-Nanruan-Killer/raw/master/pskill.exe'  # GitHub源
+# pssuspendurl = 'https://github.com/zhouxuanyi-zxy/Python-Nanruan-Killer/raw/master/pssuspend.exe  # GitHub源
 pssuspendurl = 'https://gitee.com/zhouxuanyi/Python-Nanruan-Killer/raw/master/pssuspend.exe' # Gitee源
 r = requests.get(pssuspendurl)
 with open("pssuspend.exe", "wb") as code:
