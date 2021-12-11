@@ -1,6 +1,8 @@
 # Python-Nanruan-Killer
 一个让老师无法控制你的小软件，使用pssuspend挂起进程、taskkill结束进程、pskill结束进程，后续基本不可能会加ntsd结束进程。（因为pskill已经测试通过）已开发完成，后续会继续保持更新。
 
+[![License](https://img.shields.io/badge/license-MIT-svg)](https://github.com/zhouxuanyi-zxy/Python-Nanruan-Killer/blob/master/LICENSE)
+
 ## 使用说明
 请下载**pssuspend.exe**和**pskill**文件及**程序主文件**    
 之后在信息课拼手速插U盘点开程序即可破解  
