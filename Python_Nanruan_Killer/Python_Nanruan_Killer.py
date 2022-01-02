@@ -8,6 +8,18 @@
 
 import os
 import sys
+import os.path
+
+def file():
+    if os.path.isfile("pssuspend.exe"):
+        if os.path.isfile("pskill.exe"):
+            print("文件检测完毕！")
+        else:
+            print("缺少pskill.exe!")
+            exit()
+    else:
+        print("缺少pssuspend.exe！")
+        exit()
 
 def pssuspend():
     print("使用pssuspend挂起进程")
@@ -32,6 +44,7 @@ def pskill():
     os.system(pskill)
 
 print("------ by zhouxuanyi_zxy ------")
+file()
 pssuspend()
 taskkill()
 pskill()
