@@ -29,6 +29,7 @@ v1.04 (2022/1/2)
 + 在 Python_Nanruan_Killer.py 中增加文件完整性检测
 
 v1.05 (2022/1/2)
+
 重要更新
 + ntsd 强制结束进程
 + 自动下载ntsd (download.py)
