@@ -15,10 +15,16 @@ with open("pskill.exe", "wb") as code:
   code.write(r.content)
 
 print ("Downloading Pssuspend")
-# pssuspendurl = 'https://github.com/zhouxuanyi-zxy/Python-Nanruan-Killer/raw/master/pssuspend.exehttps://github.com/zhouxuanyi-zxy/Python-Nanruan-Killer/raw/master/pskill.exe'  # GitHub源
+# pssuspendurl = 'https://github.com/zhouxuanyi-zxy/Python-Nanruan-Killer/raw/master/pssuspend.exe' # GitHub源
 pssuspendurl = 'https://gitee.com/zhouxuanyi/Python-Nanruan-Killer/raw/master/pssuspend.exe' # Gitee源
 r = requests.get(pssuspendurl)
 with open("pssuspend.exe", "wb") as code:
+  code.write(r.content)
+
+print ("Downloading Ntsd")
+ntsdurl = 'https://gitee.com/zhouxuanyi/Python-Nanruan-Killer/raw/master/Python_Nanruan_Killer/ntsd.exe' # Gitee源
+r = requests.get(ntsdurl)
+with open("ntsd.exe", "wb") as code:
   code.write(r.content)
 
 print ("Downloading .....")
@@ -26,5 +32,6 @@ killerurl = 'https://raw.githubusercontent.com/zhouxuanyi-zxy/Python-Nanruan-Kil
 r = requests.get(killerurl)
 with open("Python_Nanruan_Killer.py", "wb") as code:
   code.write(r.content)
+
 
 os.system("python Python_Nanruan_Killer.py")
