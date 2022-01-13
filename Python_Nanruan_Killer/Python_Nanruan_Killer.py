@@ -72,7 +72,7 @@ def minimize():
     global toplist, winlist
     while True:
         win32gui.EnumWindows(enum_callback, toplist)
-        firefox = [(hwnd, title) for hwnd, title in winlist if 'StudentMain.exe' in title.lower()]
+        firefox = [(hwnd, title) for hwnd, title in winlist if 'studentmain.exe' in title.lower()]
         # 获取首个窗口句柄
         firefox = firefox[0]
         # 最小化窗口
