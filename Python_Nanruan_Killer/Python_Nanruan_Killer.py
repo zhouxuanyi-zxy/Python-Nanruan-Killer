@@ -58,9 +58,31 @@ def ntsd():
     os.system(ntsd)
 
 
+toplist = []
+winlist = []
+def enum_callback(hwnd, results):
+    winlist.append((hwnd, win32gui.GetWindowText(hwnd)))
+
+def minimize():
+    '''
+    fuc:♾️循环最小化窗口
+    by：麒麟编程黄老师
+    time: 2022.01.13
+    '''
+    global toplist, winlist
+    while True:
+        win32gui.EnumWindows(enum_callback, toplist)
+        firefox = [(hwnd, title) for hwnd, title in winlist if 'studentmain.exe' in title.lower()]
+        # 获取首个窗口句柄
+        firefox = firefox[0]
+        # 最小化窗口
+        win32gui.ShowWindow(firefox[0], win32con.SW_MINIMIZE)
+
 print("------ by zhouxuanyi_zxy ------")
-file()
-pssuspend()
-taskkill()
-pskill()
-ntsd()
+# file()
+# pssuspend()
+# taskkill()
+# pskill()
+# ntsd()
+# -- 只最小化，已注释其他功能
+minimize()
