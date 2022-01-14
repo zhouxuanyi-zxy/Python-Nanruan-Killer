@@ -1,10 +1,11 @@
 # Nanruan_Killer Python Edition
-# Version 1.03
+# Version 1.05-pre1
 # Author: zhouxuanyi
 # License: MIT
 # 2021/9/27 22.47
 # 2021/10/2 14:46
 # 2021/12/11 11:34
+# 2022/1/14 23:48
 
 import os
 import sys
