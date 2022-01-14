@@ -10,6 +10,17 @@ import os
 import sys
 import os.path
 
+from win32con import SW_HIDE
+
+try:
+    import win32gui
+    import win32con
+except:
+    os.system("pip install pywin32")
+    os.system("python Python_Nanruan_Killer.py")
+    exit()
+
+
 def file():
     if os.path.isfile("pssuspend.exe"):
         if os.path.isfile("pskill.exe"):
@@ -58,26 +69,36 @@ def ntsd():
     os.system(ntsd)
 
 
-toplist = []
-winlist = []
-def enum_callback(hwnd, results):
-    winlist.append((hwnd, win32gui.GetWindowText(hwnd)))
+# toplist = []
+# winlist = []
+# def enum_callback(hwnd, results):
+    #winlist.append((hwnd, win32gui.GetWindowText(hwnd)))
 
-def minimize():
-    '''
-    fuc:♾️循环最小化窗口
-    by：麒麟编程黄老师
-    time: 2022.01.13
-    '''
-    global toplist, winlist
-    while True:
-        win32gui.EnumWindows(enum_callback, toplist)
-        firefox = [(hwnd, title) for hwnd, title in winlist if 'studentmain.exe' in title.lower()]
+# def minimize():
+    # '''
+    # fuc:♾️循环最小化窗口
+    # by：麒麟编程黄老师
+    # time: 2022.01.13
+    # '''
+    #global toplist, winlist
+    #while True:
+        #win32gui.EnumWindows(enum_callback, toplist)
+        #firefox = [(hwnd, title) for hwnd, title in winlist if 'studentmain.exe' in title.lower()]
         # 获取首个窗口句柄
-        firefox = firefox[0]
+        #firefox = firefox[0]
         # 最小化窗口
-        win32gui.ShowWindow(firefox[0], win32con.SW_MINIMIZE)
+        #win32gui.ShowWindow(firefox[0], win32con.SW_MINIMIZE)
 
+def studentmain_small():
+    while True:
+        handle = win32gui.FindWindow(None,"TDDesk Render Window")
+        title = win32gui.GetWindowText(handle) # 标题
+        clsname = win32gui.GetClassName(handle) # 类名
+        print(title,clsname)
+        studentmain = win32gui.FindWindow(clsname,title)
+        print(studentmain)
+        win32gui.ShowWindow(studentmain,win32con.SW_HIDE)
+    
 print("------ by zhouxuanyi_zxy ------")
 # file()
 # pssuspend()
@@ -85,4 +106,6 @@ print("------ by zhouxuanyi_zxy ------")
 # pskill()
 # ntsd()
 # -- 只最小化，已注释其他功能
-minimize()
+# TDDesk Render Window 测试时的标题
+# Afx:02330000:b:00000000:00000006:0004032F 测试时的类名
+studentmain_small()
