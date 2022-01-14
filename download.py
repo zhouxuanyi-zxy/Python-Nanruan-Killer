@@ -1,5 +1,5 @@
-# Nanruan_Killer Python Edition
-# Version 1.05
+# Nanruan_Killer Python Edition Tools Downloader
+# Version 1.06-pre1
 # Author: zhouxuanyi
 # License: MIT
 # 2021/12/11 11:23

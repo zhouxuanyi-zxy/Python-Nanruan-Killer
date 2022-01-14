@@ -1,5 +1,5 @@
-# Nanruan_Killer Python Edition
-# Version 1.05
+# Nanruan_Killer Python Edition Python x86 Downloader
+# Version 1.06-pre1
 # Author: zhouxuanyi
 # License: MIT
 # -*- coding: utf-8 -*-

@@ -1,5 +1,5 @@
 # Nanruan_Killer Python Edition
-# Version 1.05-pre1
+# Version 1.06-pre1
 # Author: zhouxuanyi
 # License: MIT
 # 2021/9/27 22.47
