@@ -30,7 +30,7 @@ def hide():
     studentmain_hide()
 
 def show():
-    pass
+    studentmain_show()
 
 def start():
     print("*"*40)
