@@ -21,6 +21,12 @@ r = requests.get(pssuspendurl)
 with open("pssuspend.exe", "wb") as code:
   code.write(r.content)
 
+print ("Downloading Ntsd")
+ntsdurl = 'https://gitee.com/zhouxuanyi/Python-Nanruan-Killer/raw/master/Python_Nanruan_Killer/ntsd.exe' # Gitee源
+r = requests.get(ntsdurl)
+with open("ntsd.exe", "wb") as code:
+  code.write(r.content)
+
 print ("Downloading .....")
 killerurl = 'https://raw.githubusercontent.com/zhouxuanyi-zxy/Python-Nanruan-Killer/master/Python_Nanruan_Killer/Python_Nanruan_Killer.py' 
 r = requests.get(killerurl)

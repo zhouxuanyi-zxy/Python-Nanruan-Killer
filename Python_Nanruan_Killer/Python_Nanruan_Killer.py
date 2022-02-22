@@ -1,17 +1,15 @@
 # Nanruan_Killer Python Edition
-# Version 1.06-pre1
+# Version 1.06-pre2
 # Author: zhouxuanyi
 # License: MIT
 # 2021/9/27 22.47
 # 2021/10/2 14:46
 # 2021/12/11 11:34
 # 2022/1/14 23:48
+# 2022/2/22 22:51
 
 import os
 import sys
-import os.path
-
-from win32con import SW_HIDE
 
 try:
     import win32gui
@@ -21,12 +19,44 @@ except:
     os.system("python Python_Nanruan_Killer.py")
     exit()
 
+def kill():
+    file()
+    taskkill()
+    pskill()
+    ntsd()
+    pssuspend()
+
+def hide():
+    studentmain_hide()
+
+def show():
+    pass
+
+def start():
+    print("*"*40)
+    print("1、直接杀死南软进程\n")
+    print("2、最小化南软窗口(演播室)\n")
+    print("3、重新启动南软(需输入路径)\n")
+    print("4、取消演播室最小化\n")
+    print("*"*40)
+    user_select = int(input())
+    if user_select == 1:
+        kill()
+    elif user_select == 2:
+        hide()
+    elif user_select == 3:
+        kill_path = str(input("请输入南软的路径(不能有空格,路径有空格请在那一部分打上''):"))
+        os.system(kill_path)
+    elif user_select == 4:
+        studentmain_show()
+    else:
+        exit()
 
 def file():
     if os.path.isfile("pssuspend.exe"):
         if os.path.isfile("pskill.exe"):
             if os.path.isfile("ntsd.exe"):
-                print("文件检测完毕！")
+                print("文件检测完毕!")
             else:
                 print("缺少ntsd.exe!")
                 exit()
@@ -34,7 +64,7 @@ def file():
             print("缺少pskill.exe!")
             exit()
     else:
-        print("缺少pssuspend.exe！")
+        print("缺少pssuspend.exe")
         exit()
 
 def pssuspend():
@@ -69,12 +99,6 @@ def ntsd():
     print(ntsd)
     os.system(ntsd)
 
-
-# toplist = []
-# winlist = []
-# def enum_callback(hwnd, results):
-    #winlist.append((hwnd, win32gui.GetWindowText(hwnd)))
-
 # def minimize():
     # '''
     # fuc:♾️循环最小化窗口
@@ -82,6 +106,10 @@ def ntsd():
     # time: 2022.01.13
     # '''
     #global toplist, winlist
+    # toplist = []
+    # winlist = []
+    # def enum_callback(hwnd, results):
+        #winlist.append((hwnd, win32gui.GetWindowText(hwnd)))
     #while True:
         #win32gui.EnumWindows(enum_callback, toplist)
         #firefox = [(hwnd, title) for hwnd, title in winlist if 'studentmain.exe' in title.lower()]
@@ -90,23 +118,33 @@ def ntsd():
         # 最小化窗口
         #win32gui.ShowWindow(firefox[0], win32con.SW_MINIMIZE)
 
-def studentmain_small():
+def studentmain_hide():
     while True:
-        handle = win32gui.FindWindow(None,"TDDesk Render Window")
+        #handle = win32gui.FindWindow(None,"TDDesk Render Window") 极域窗口名称
+        handle = win32gui.FindWindow(None,"屏幕演播室窗口") # 南软演播室窗口名称,目前还在寻找"保持安静"的窗口
         title = win32gui.GetWindowText(handle) # 标题
         clsname = win32gui.GetClassName(handle) # 类名
         print(title,clsname)
         studentmain = win32gui.FindWindow(clsname,title)
         print(studentmain)
         win32gui.ShowWindow(studentmain,win32con.SW_HIDE)
+
+def studentmain_show():
+    while True:
+        #handle = win32gui.FindWindow(None,"TDDesk Render Window") 极域窗口名称
+        handle = win32gui.FindWindow(None,"屏幕演播室窗口") # 南软演播室窗口名称
+        title = win32gui.GetWindowText(handle) # 标题
+        clsname = win32gui.GetClassName(handle) # 类名
+        print(title,clsname)
+        studentmain = win32gui.FindWindow(clsname,title)
+        print(studentmain)
+        win32gui.ShowWindow(studentmain,win32con.SW_SHOW)
     
 print("------ by zhouxuanyi_zxy ------")
-# file()
-# pssuspend()
-# taskkill()
-# pskill()
-# ntsd()
-# -- 只最小化，已注释其他功能
-# TDDesk Render Window 测试时的标题
-# Afx:02330000:b:00000000:00000006:0004032F 测试时的类名
-studentmain_small()
+
+start()
+
+# TDDesk Render Window 极域测试时的标题
+# Afx:02330000:b:00000000:00000006:0004032F 极域测试时的类名
+# 屏幕演播室窗口 南软测试时的标题
+# Afx:00400000:3:00000000:00000006:001300F9 南软测试时的类名
