@@ -1,5 +1,5 @@
 # Nanruan_Killer Python Edition
-# Version 1.06-pre3
+# Version 1.06
 # Author: zhouxuanyi
 # License: MIT
 # 2021/9/27 22.47
@@ -8,10 +8,12 @@
 # 2022/1/14 23:48
 # 2022/2/22 22:51
 # 2022/6/26 19:52
+# 2024/2/9 21:21
 
 import os
 import sys
-
+import winreg
+import ctypes
 try:
     import win32gui
     import win32con
@@ -27,11 +29,11 @@ def kill():
     ntsd()
     pssuspend()
 
-def hide():
-    studentmain_hide()
+# def hide():
+#     studentmain_hide()
 
-def show():
-    studentmain_show()
+# def show():
+#     studentmain_show()
 
 def file():
     if os.path.isfile("pssuspend.exe"):
@@ -47,6 +49,53 @@ def file():
     else:
         print("缺少pssuspend.exe")
         exit()
+
+def find_program_path():
+    reg = winreg.ConnectRegistry(None,winreg.HKEY_LOCAL_MACHINE)
+    reg = winreg.OpenKey(reg,r"SOFTWARE\TopDomain\e-Learning Class Standard\1.00")
+    studentmain_path = winreg.QueryValueEx(reg,"TargetDirectory")
+    studentmain_path = studentmain_path[0]
+    print("南软(极域)路径为:",studentmain_path)
+    winreg.CloseKey(reg)
+    ''' 
+    以下为删除南软(极域)的注册表(WIP)
+    删除后可无密码卸载
+    '''
+    # try:
+    #     reg = winreg.ConnectRegistry(None,winreg.HKEY_LOCAL_MACHINE)
+    #     reg = winreg.OpenKey(reg,r"SOFTWARE\TopDomain")
+    #     # reg = winreg.EnumKey(reg,0)
+    #     # winreg.DeleteKey(reg,"1")
+    #     for i in range(114514):
+    #         try:
+    #             keys = winreg.EnumKey(reg,i)
+    #             print(keys)
+    #             reg1 = winreg.ConnectRegistry(None,winreg.HKEY_LOCAL_MACHINE)
+    #             reg1 = winreg.OpenKey(reg1,r"SOFTWARE\TopDomain\{}".format(keys))
+    #             keys_in = winreg.QueryValue(reg1,"1")
+    #             print(keys_in)
+    #             # winreg.DeleteKey(reg,keys)
+    #         except OSError:
+    #             break;
+    #     print(keys)
+    #     winreg.DeleteKey(reg,r"TopDomain")
+    #     print("现在已删除其的注册表,你也可以直接卸载了")
+    #     return studentmain_path
+    # except:
+    #     return studentmain_path
+    return studentmain_path
+    
+def rename_eXchange20_dll():
+    studentmain_path = find_program_path()
+    try:
+        os.rename(studentmain_path+"eXchange20.dll",studentmain_path+"eXchange20.dll.1")
+    except:
+        pass
+    # print("是否注销?")
+    # shutdown_l = int(input())
+    shutdown_l = 0 # 考虑到真实环境中并不见得有机会做这个选择
+    if shutdown_l == 1:
+        os.system("shutdown /l")
 
 def pssuspend():
     os.system("chcp 65001")
@@ -123,10 +172,18 @@ def studentmain_show():
     
 print("------ by zhouxuanyi_zxy ------")
 
-taskkill()
-pskill()
-ntsd()
-
+print("is_admin =",ctypes.windll.shell32.IsUserAnAdmin())
+if ctypes.windll.shell32.IsUserAnAdmin() == 0:
+    ctypes.windll.shell32.ShellExecuteW(None,"runas",sys.executable,__file__,None,1)
+    # print(ctypes.windll.shell32.IsUserAnAdmin())
+    # os.system("python Python_Nanruan_Killer.py")
+else:
+    rename_eXchange20_dll()
+    find_program_path()
+    taskkill()
+    pskill()
+    ntsd()
+    os.system("pause")
 # 回退了 Pre-2 中的选择界面
 # TDDesk Render Window 极域测试时的标题
 # Afx:02330000:b:00000000:00000006:0004032F 极域测试时的类名
