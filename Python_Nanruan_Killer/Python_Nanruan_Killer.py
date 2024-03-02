@@ -38,6 +38,11 @@ pssuspend_name_base64 = "cHNzdXNwZW5k"
 ntsd_name_base64 = "bnRzZA=="
 '''↑防止镜像劫持和进程检测'''
 
+pskill_name = ""
+pssuspend_name = ""
+ntsd_name = ""
+'''↑找到有的文件名'''
+
 def download_files(file):  # 如果自释放文件SHA256校验不通过,则下载
     # Nanruan_Killer Python Edition Tools Downloader (download.py)
     # Version 1.06.2
@@ -104,8 +109,21 @@ def kill():
 
 def file():
     if os.path.isfile("pssuspend.exe") or os.path.isfile("{}.exe".format(pssuspend_name_base64)):
+        if os.path.isfile("pssuspend.exe"):
+            pssuspend_name = "pssuspend"
+        else:
+            pssuspend_name = pssuspend_name_base64
         if os.path.isfile("pskill.exe") or os.path.isfile("{}.exe".format(pskill_name_base64)):
+            if os.path.isfile("pskill.exe"):
+                pskill_name = "pskill"
+            else:
+                pskill_name = pskill_name_base64
             if os.path.isfile("ntsd.exe") or os.path.isfile("{}.exe".format(ntsd_name_base64)):
+                if os.path.isfile("ntsd.exe"):
+                    ntsd_name = "ntsd"
+                else:
+                    ntsd_name = ntsd_name_base64
+
                 print("文件检测完毕!")
             else:
                 print("缺少ntsd.exe!")
@@ -173,7 +191,7 @@ def pssuspend():
     pssuspendfilepath = sys.path[0]
     #pssuspendfile = path + "\pssuspend.exe"
     #pssuspendfile = pssuspendfile + " StudentMain.exe"
-    pssuspendfile = pssuspendfilepath + r"\pssuspend.exe StudentMain.exe"
+    pssuspendfile = pssuspendfilepath + r"\{}.exe StudentMain.exe".format(pssuspend_name)
     print(pssuspendfile)
     os.system(pssuspendfile)
     
@@ -187,7 +205,7 @@ def pskill():
     pskill = sys.path[0]
     #pskill = pskill + "\pskill.exe"
     #pskill = pskill + " -t StudentMain.exe"
-    pskill = pskill + r"\pskill.exe -t StudentMain.exe"
+    pskill = pskill + r"\{}.exe -t StudentMain.exe".format(pskill_name)
     print(pskill)
     os.system(pskill)
 
@@ -195,7 +213,7 @@ def ntsd():
     os.system("chcp 65001")
     print("使用ntsd结束进程")
     ntsd = sys.path[0]
-    ntsd = ntsd + r"\ntsd.exe -c q -pn StudentMain.exe"
+    ntsd = ntsd + r"\{}.exe -c q -pn StudentMain.exe".format(ntsd_name)
     print(ntsd)
     os.system(ntsd)
 
@@ -245,10 +263,21 @@ print("------ by zhouxuanyi_zxy ------")
 is_admin = ctypes.windll.shell32.IsUserAnAdmin()
 print("is_admin =",is_admin)
 if is_admin == 0:
-    ctypes.windll.shell32.ShellExecuteW(None,"runas",sys.executable,__file__,None,1)
+    try:
+        ctypes.windll.shell32.ShellExecuteW(None,"runas",sys.executable,__file__,None,1)
+    except:
+        file()
+        rename_eXchange20_dll()
+        find_program_path()
+        taskkill()
+        pskill()
+        ntsd()
+        os.system("pause")
+    # 一些系统下会报错
     # print(ctypes.windll.shell32.IsUserAnAdmin())
     # os.system("python Python_Nanruan_Killer.py")
 else:
+    file()
     rename_eXchange20_dll()
     find_program_path()
     taskkill()
