@@ -17,6 +17,7 @@ import sys
 import winreg
 import ctypes
 import base64
+import asyncio
 try:
     import win32gui
     import win32con
@@ -140,9 +141,19 @@ def file():
 
 def find_program_path():
     reg = winreg.ConnectRegistry(None,winreg.HKEY_LOCAL_MACHINE)
-    reg = winreg.OpenKey(reg,r"SOFTWARE\TopDomain\e-Learning Class Standard\1.00")
-    studentmain_path = winreg.QueryValueEx(reg,"TargetDirectory")
-    studentmain_path = studentmain_path[0]
+    try:
+        reg = winreg.OpenKey(reg,r"SOFTWARE\TopDomain\e-Learning Class Standard\1.00")
+        studentmain_path = winreg.QueryValueEx(reg,"TargetDirectory")
+        studentmain_path = studentmain_path[0]
+        # 南软的
+    except:
+        try:
+            reg = winreg.OpenKey(reg,r"SOFTWARE\WOW6432Node\TopDomain\e-Learning Class Standard\1.00")
+            studentmain_path = winreg.QueryValueEx(reg,"TargetDirectory")
+            studentmain_path = studentmain_path[0]
+            # 极域v6.0 2016 and 极域v4.0 2015
+        except:
+            studentmain_path = "Not Found!"
     print("南软(极域)路径为:",studentmain_path)
     winreg.CloseKey(reg)
     ''' 
@@ -236,7 +247,7 @@ def ntsd():
         # 最小化窗口
         #win32gui.ShowWindow(firefox[0], win32con.SW_MINIMIZE)
 
-def studentmain_hide():
+async def studentmain_hide():
     while True:
         #handle = win32gui.FindWindow(None,"TDDesk Render Window") 极域窗口名称
         handle = win32gui.FindWindow(None,"屏幕演播室窗口") # 南软演播室窗口名称,目前还在寻找"保持安静"的窗口
@@ -246,8 +257,9 @@ def studentmain_hide():
         studentmain = win32gui.FindWindow(clsname,title)
         print(studentmain)
         win32gui.ShowWindow(studentmain,win32con.SW_HIDE)
+        asyncio.sleep(3)
 
-def studentmain_show():
+async def studentmain_show():
     while True:
         #handle = win32gui.FindWindow(None,"TDDesk Render Window") 极域窗口名称
         handle = win32gui.FindWindow(None,"屏幕演播室窗口") # 南软演播室窗口名称
@@ -257,6 +269,7 @@ def studentmain_show():
         studentmain = win32gui.FindWindow(clsname,title)
         print(studentmain)
         win32gui.ShowWindow(studentmain,win32con.SW_SHOW)
+        asyncio.sleep(3)
     
 print("------ by zhouxuanyi_zxy ------")
 
@@ -279,7 +292,6 @@ if is_admin == 0:
 else:
     file()
     rename_eXchange20_dll()
-    find_program_path()
     taskkill()
     pskill()
     ntsd()
