@@ -17,7 +17,8 @@ import sys
 import winreg
 import ctypes
 import base64
-import asyncio
+import time
+import threading
 try:
     import win32gui
     import win32con
@@ -109,6 +110,7 @@ def kill():
 #     studentmain_show()
 
 def file():
+    global pssuspend_name,pskill_name,ntsd_name
     if os.path.isfile("pssuspend.exe") or os.path.isfile("{}.exe".format(pssuspend_name_base64)):
         if os.path.isfile("pssuspend.exe"):
             pssuspend_name = "pssuspend"
@@ -197,12 +199,13 @@ def rename_eXchange20_dll():
         os.system("shutdown /l")
 
 def pssuspend():
-    os.system("chcp 65001")
+    global pssuspend_name
     print("使用pssuspend挂起进程")
     pssuspendfilepath = sys.path[0]
     #pssuspendfile = path + "\pssuspend.exe"
     #pssuspendfile = pssuspendfile + " StudentMain.exe"
-    pssuspendfile = pssuspendfilepath + r"\{}.exe StudentMain.exe".format(pssuspend_name)
+    pssuspend1 = "\{}.exe -nobanner StudentMain.exe".format(pssuspend_name)
+    pssuspendfile = pssuspendfilepath + pssuspend1
     print(pssuspendfile)
     os.system(pssuspendfile)
     
@@ -211,20 +214,23 @@ def taskkill():
     os.system("taskkill /F /T /IM StudentMain.exe")
 
 def pskill():
-    os.system("chcp 65001")
-    print("使用pskill结束进程")
+    global pskill_name
     pskill = sys.path[0]
     #pskill = pskill + "\pskill.exe"
     #pskill = pskill + " -t StudentMain.exe"
-    pskill = pskill + r"\{}.exe -t StudentMain.exe".format(pskill_name)
+    print(pskill_name)
+    pskill1 = "\{}.exe -t -nobanner StudentMain.exe".format(pskill_name)
+    print(pskill1)
+    pskill = pskill + pskill1
     print(pskill)
     os.system(pskill)
 
 def ntsd():
-    os.system("chcp 65001")
+    global ntsd_name
     print("使用ntsd结束进程")
     ntsd = sys.path[0]
-    ntsd = ntsd + r"\{}.exe -c q -pn StudentMain.exe".format(ntsd_name)
+    ntsd1 = "\{}.exe -c q -pn StudentMain.exe".format(ntsd_name)
+    ntsd = ntsd + ntsd1
     print(ntsd)
     os.system(ntsd)
 
@@ -247,30 +253,32 @@ def ntsd():
         # 最小化窗口
         #win32gui.ShowWindow(firefox[0], win32con.SW_MINIMIZE)
 
-async def studentmain_hide():
+def studentmain_hide():
     while True:
         #handle = win32gui.FindWindow(None,"TDDesk Render Window") 极域窗口名称
         handle = win32gui.FindWindow(None,"屏幕演播室窗口") # 南软演播室窗口名称,目前还在寻找"保持安静"的窗口
+        # handle = win32gui.FindWindow(None,"无标题 - 记事本")
         title = win32gui.GetWindowText(handle) # 标题
         clsname = win32gui.GetClassName(handle) # 类名
-        print(title,clsname)
+        # print(title,clsname)
         studentmain = win32gui.FindWindow(clsname,title)
-        print(studentmain)
+        # print(studentmain)
         win32gui.ShowWindow(studentmain,win32con.SW_HIDE)
-        asyncio.sleep(3)
+        time.sleep(1.0)
+        
 
-async def studentmain_show():
-    while True:
-        #handle = win32gui.FindWindow(None,"TDDesk Render Window") 极域窗口名称
-        handle = win32gui.FindWindow(None,"屏幕演播室窗口") # 南软演播室窗口名称
-        title = win32gui.GetWindowText(handle) # 标题
-        clsname = win32gui.GetClassName(handle) # 类名
-        print(title,clsname)
-        studentmain = win32gui.FindWindow(clsname,title)
-        print(studentmain)
-        win32gui.ShowWindow(studentmain,win32con.SW_SHOW)
-        asyncio.sleep(3)
+def studentmain_show():
+    #handle = win32gui.FindWindow(None,"TDDesk Render Window") 极域窗口名称
+    handle = win32gui.FindWindow(None,"屏幕演播室窗口") # 南软演播室窗口名称
+    # handle = win32gui.FindWindow(None,"无标题 - 记事本")
+    title = win32gui.GetWindowText(handle) # 标题
+    clsname = win32gui.GetClassName(handle) # 类名
+    print(title,clsname)
+    studentmain = win32gui.FindWindow(clsname,title)
+    print(studentmain)
+    win32gui.ShowWindow(studentmain,win32con.SW_SHOW)
     
+os.system("chcp 65001")
 print("------ by zhouxuanyi_zxy ------")
 
 is_admin = ctypes.windll.shell32.IsUserAnAdmin()
@@ -290,6 +298,8 @@ if is_admin == 0:
     # print(ctypes.windll.shell32.IsUserAnAdmin())
     # os.system("python Python_Nanruan_Killer.py")
 else:
+    hide_studentmain = threading.Thread(target=studentmain_hide)
+    hide_studentmain.start()
     file()
     rename_eXchange20_dll()
     taskkill()
