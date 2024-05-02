@@ -11,6 +11,7 @@
 # 2024/2/9 21:21
 # 2024/2/18 14:08
 # 2024/2/21 21:06
+# 2024/5/2 16:13
 
 import os
 import sys
@@ -37,7 +38,8 @@ pskill_base64 = b'TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
 pskill_name_base64 = "cHNraWxs"
 pssuspend_name_base64 = "cHNzdXNwZW5k"
-ntsd_name_base64 = "bnRzZA=="
+ntsd_name_base64 = "bnRzZA"
+# ntsd 用 base64 编码后的名称最后有==,貌似cmd没有办法运行
 '''↑防止镜像劫持和进程检测'''
 
 pskill_name = ""
@@ -215,6 +217,7 @@ def taskkill():
 
 def pskill():
     global pskill_name
+    print("使用pskill结束进程")
     pskill = sys.path[0]
     #pskill = pskill + "\pskill.exe"
     #pskill = pskill + " -t StudentMain.exe"
@@ -256,21 +259,32 @@ def ntsd():
 def studentmain_hide():
     while True:
         #handle = win32gui.FindWindow(None,"TDDesk Render Window") 极域窗口名称
-        handle = win32gui.FindWindow(None,"屏幕演播室窗口") # 南软演播室窗口名称,目前还在寻找"保持安静"的窗口
-        # handle = win32gui.FindWindow(None,"无标题 - 记事本")
+        try:
+            handle = win32gui.FindWindow(None,"屏幕演播室窗口") # 南软演播室窗口名称,目前还在寻找"保持安静"的窗口
+        except:
+            try:
+                handle = win32gui.FindWindow(None,"屏幕广播") # 极域的
+            except:
+                time.sleep(1.5)
+                continue
         title = win32gui.GetWindowText(handle) # 标题
         clsname = win32gui.GetClassName(handle) # 类名
         # print(title,clsname)
         studentmain = win32gui.FindWindow(clsname,title)
         # print(studentmain)
         win32gui.ShowWindow(studentmain,win32con.SW_HIDE)
-        time.sleep(1.0)
+        time.sleep(1.5)
         
 
 def studentmain_show():
     #handle = win32gui.FindWindow(None,"TDDesk Render Window") 极域窗口名称
-    handle = win32gui.FindWindow(None,"屏幕演播室窗口") # 南软演播室窗口名称
-    # handle = win32gui.FindWindow(None,"无标题 - 记事本")
+    try:
+        handle = win32gui.FindWindow(None,"屏幕演播室窗口") # 南软演播室窗口名称
+    except:
+        try:
+            handle = win32gui.FindWindow(None,"屏幕广播") # 极域的
+        except:
+            return 0
     title = win32gui.GetWindowText(handle) # 标题
     clsname = win32gui.GetClassName(handle) # 类名
     print(title,clsname)
@@ -281,12 +295,17 @@ def studentmain_show():
 os.system("chcp 65001")
 print("------ by zhouxuanyi_zxy ------")
 
-is_admin = ctypes.windll.shell32.IsUserAnAdmin()
+# is_admin = ctypes.windll.shell32.IsUserAnAdmin()
+# ↑ 十分奇怪,在一些系统上它只会直接卡住
+
+is_admin = 1
 print("is_admin =",is_admin)
 if is_admin == 0:
     try:
         ctypes.windll.shell32.ShellExecuteW(None,"runas",sys.executable,__file__,None,1)
     except:
+        hide_studentmain = threading.Thread(target=studentmain_hide)
+        hide_studentmain.start()
         file()
         rename_eXchange20_dll()
         find_program_path()
