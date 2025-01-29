@@ -272,7 +272,7 @@ def studentmain_hide():
         # print(title,clsname)
         studentmain = win32gui.FindWindow(clsname,title)
         # print(studentmain)
-        win32gui.ShowWindow(studentmain,win32con.SW_HIDE)
+        win32gui.ShowWindow(studentmain,win32con.SW_MINIMIZE)
         time.sleep(1.5)
         
 
