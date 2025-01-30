@@ -273,25 +273,23 @@ def studentmain_hide():
         studentmain = win32gui.FindWindow(clsname,title)
         # print(studentmain)
         win32gui.ShowWindow(studentmain,win32con.SW_MINIMIZE)
-        time.sleep(1.5)
-        
+        time.sleep(2)
 
-def studentmain_show():
-    #handle = win32gui.FindWindow(None,"TDDesk Render Window") 极域窗口名称
-    try:
-        handle = win32gui.FindWindow(None,"屏幕演播室窗口") # 南软演播室窗口名称
-    except:
+def studentmain_hide_blackscreen():
+    while True:
         try:
-            handle = win32gui.FindWindow(None,"屏幕广播") # 极域的
+            handle_blackscreen = win32gui.FindWindow(None,"BlackScreen Window") # "保持安静"的窗口
         except:
-            return 0
-    title = win32gui.GetWindowText(handle) # 标题
-    clsname = win32gui.GetClassName(handle) # 类名
-    print(title,clsname)
-    studentmain = win32gui.FindWindow(clsname,title)
-    print(studentmain)
-    win32gui.ShowWindow(studentmain,win32con.SW_SHOW)
-    
+            time.sleep(2)
+            continue
+        title = win32gui.GetWindowText(handle_blackscreen) # 标题
+        clsname = win32gui.GetClassName(handle_blackscreen) # 类名
+        # print(title,clsname)
+        studentmain = win32gui.FindWindow(clsname,title)
+        # print(studentmain)
+        win32gui.ShowWindow(studentmain,win32con.SW_MINIMIZE)
+        time.sleep(2)
+
 os.system("chcp 65001")
 print("------ by zhouxuanyi_zxy ------")
 
@@ -306,12 +304,14 @@ if is_admin == 0:
     except:
         hide_studentmain = threading.Thread(target=studentmain_hide)
         hide_studentmain.start()
+        hide_studentmain_bs = threading.Thread(target=studentmain_hide_blackscreen)
+        hide_studentmain_bs.start()
         file()
         rename_eXchange20_dll()
         find_program_path()
-        taskkill()
+        # taskkill()
         pskill()
-        ntsd()
+        # ntsd()
         os.system("pause")
     # 一些系统下会报错
     # print(ctypes.windll.shell32.IsUserAnAdmin())
@@ -319,11 +319,13 @@ if is_admin == 0:
 else:
     hide_studentmain = threading.Thread(target=studentmain_hide)
     hide_studentmain.start()
+    hide_studentmain_bs = threading.Thread(target=studentmain_hide_blackscreen)
+    hide_studentmain_bs.start()
     file()
     rename_eXchange20_dll()
-    taskkill()
+    # taskkill()
     pskill()
-    ntsd()
+    # ntsd()
     os.system("pause")
 # 回退了 Pre-2 中的选择界面
 # TDDesk Render Window 极域测试时的标题
