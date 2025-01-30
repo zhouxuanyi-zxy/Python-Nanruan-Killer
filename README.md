@@ -4,10 +4,14 @@
 
 一个让老师无法控制你的小软件，使用pssuspend挂起进程、taskkill结束进程、pskill结束进程、ntsd结束进程、win32gui和win32con最小化窗口。（ntsd在Windows 10 21H2无法使用，但在Windows 7 可以使用）已开发完成，后续会继续保持更新。
 
-如果只想要快速结束进程和代码简洁，可以试一下我的另一个项目，此项目的C++版[Cpp-Nanruan-Killer](https://github.com/zhouxuanyi-zxy/Cpp-Nanruan-Killer)，功能几乎一致。
-
 ## 使用说明
-请下载**pssuspend.exe**和**pskill.exe**和**ntsd.exe**及**程序主文件**    
+
+**请使用管理员权限运行**
+
+~请下载**pssuspend.exe**和**pskill.exe**和**ntsd.exe**及**程序主文件**~
+
+无需，只需下载主文件，程序会自己释放出所需的其他文件
+
 之后在信息课拼手速插U盘点开程序即可破解  
 **此软件所有版本都可以保证进程被结束，因为pskill我在2021/10/16已经测试通过，可以结束进程；也可以保证进程可以被挂起**  ![Windows 7 x64-2021-10-16-14-06-51](https://user-images.githubusercontent.com/69704410/137575937-a9a2ee5e-91f3-465f-8eed-709ee8e551dd.png)
 
